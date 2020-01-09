@@ -2311,6 +2311,44 @@ type:
 
 
 
+
+
+# 动态库制作及使用
+
+**动态库的制作**：
+1.通过gcc -c add.c 生成目标文件 =》add.o
+2.通过gcc -fPIC -shared -o libmyadd.so add.o 生成动态库文件 =》libmyadd.so
+
+gcc test.c  -fPIC -shared -o libtest.so
+
+-fPIC 动态无关代码
+
+-o 参数指定生成libtest.so ;此为动态库，Linux下格式为libxxx.so ；xxx 是后面你要调用的库名
+
+**动态库的使用**：
+
+1、动态库路径、头文件路径 添加到环境变量
+
+```shell
+#添加动态库路径
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/MyLib  
+export LD_LIBRARY_PATH  
+```
+
+```shell
+#添加头文件路径
+C_INCLUDE_PATH=/usr/include/libxml2:/MyLib  
+export C_INCLUDE_PATH 
+```
+
+2、通过gcc main.c -L动态库路径 -l动态库名称  test
+3、此时，运行找不到库文件，我们可以
+ （1）将libmyadd.so放到/usr/lib或/lib目录下
+ （2）通过export LD_LIBRARY_PATH=/home/linux/ych/lib 将库所在的绝对路径添加至环境变量中（通过echo $LD_LIBRARY_PATH查看此环境变量的值；通过unset LD_LIBRARY_PATH来删除此环境变量里的值）
+ （3）在/etc/ld.so.conf.d/下新建一个sudo vi my.conf文件，在里面写入库所在的绝对路径，保存并执行sudo ldconfig执行配置文件。
+
+
+
 # Linux C函数库参考手册
 
 

@@ -361,9 +361,9 @@ int sqlite_callback(void* para, int columnCount, char** columnValue, char** colu
 
 ​			columnName:  指向表头名的指针数组, 可以由 sqlite3_column_name() 得到
 
+### 注意事项
 
-
-
+1、sql语句中 不能使用 ”-“
 
 ## socket
 
