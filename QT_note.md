@@ -375,7 +375,9 @@ setsockopt
 
 
 
-## Linux 编译库
+## Linux 编译动态库
+
+查看依赖的库： ldd 文件名
 
 linux下生成和使用动态库的步骤如下：
 
@@ -439,25 +441,42 @@ LD_LIBRARY_PATH=../a.out    或者  export LD_LIBRARY_PATH=.  再执行./a.out
 
 
 
+## GDB 调试
+
+```shell
+#使用gdb调试时，需要在编译时使用-g参数
+g++ -g test.cpp -o test
+gdb ./test
+gdb -q test  #表示不打印gdb版本信息，界面较为干净；
+
+start                       #开始调试,停在第一行代码处,(gdb)start
+l                           #list的缩写查看源代码,(gdb) l [number/function]
+b <lines>          		   #b: Breakpoint的简写，设置断点。(gdb) b 10
+b <func>                    #b: Breakpoint的简写，设置断点。(gdb) b main
+b filename:[line/function]  #b:在文件filename的某行或某个函数处设置断点
+i breakpoints               #i:info 的简写。(gdb)i breakpoints
+d [bpNO]                    #d: Delete breakpoint的简写，删除指定编号的某个断点，或删除所有断点。断点编号从1开始递##增。 (gdb)d 1
+s                           #s: step执行一行源程序代码，如果此行代码中有函数调用，则进入该函数；(gdb) s
+n                           #n: next执行一行源程序代码，此行代码中的函数调用也一并执行。(gdb) n
+r                           #Run的简写，运行被调试的程序。如果此前没有下过断点，则执行完整个程序；如果有断点，则程序暂停在第一个可用断点处。(gdb) r
+c                   	    #Continue的简写，继续执行被调试程序，直至下一个断点或程序结束。(gdb) c
+finish             		    #函数结束
+p [var]                      #Print的简写，显示指定变量（临时变量或全局变量 例如 int a）的值。(gdb) p a
+display [var]                #display，设置想要跟踪的变量(例如 int a)。(gdb) display a
+undisplay [varnum]           #undisplay取消对变量的跟踪，被跟踪变量用整型数标识。(gdb) undisplay 1
+set args                     #可指定运行时参数。(gdb)set args 10 20
+show args                    #查看运行时参数。
+q                            #Quit的简写，退出GDB调试环境。(gdb) q 
+help [cmd]                   #GDB帮助命令，提供对GDB名种命令的解释说明。如果指定了“命令名称”参数，则显示该命令的详细说明；如果没有指定参数，则分类显示所有GDB命令，供用户进一步浏览和查询。(gdb)help
+回车                         #重复前面的命令，(gdb)回车
+
+```
 
 
 
+一开始使用 start 启动后  可以使用   s 、n 调试
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+一开始使用 r  启动 后会运行到程序结束，或断点处。
 
 
 
